@@ -10,7 +10,7 @@ export function useChat() {
     const [model, setModel] = useState(localStorage.getItem('model'));
     const [temperature, setTemperature] = useState(parseFloat(localStorage.getItem('temp')));
     const [input, setInput] = useState('');
-    const [history, setHistory] = useState<Msg[]>(() => JSON.parse(localStorage.getItem('hist') ||'[]'));
+    const [history, setHistory] = useState<Msg[]>(() => JSON.parse(localStorage.getItem('hist')|| '[]') );
     const boxRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
