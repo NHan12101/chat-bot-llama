@@ -20,5 +20,23 @@ class ChatController extends Controller
             'temperature' => (float)($request->input('temperature', 0.5)),
             'stream' => false,
         ];
+        $ch = curl_init("https://api.groq.com/openai/v1/chat/completions");
+        curl_setopt_array($ch,[
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER => [
+                "Content-Type: application/json",
+                "Authorization: Bearer". $apiKey,
+            ],
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => json_encode($payload),
+            CURLOPT_TIMEOUT => 60
+        ]);
+
+        $out = curl_exec($ch);
+        curl_close($ch);
+        $json = json_decode($out ?: '{}', true);
+        $text = $json["choices"][0]["messages"]["content"]??'[no content]';
+
+        return response()->json(["content" => $text, 'raw' => $json ]);
     }
 }
