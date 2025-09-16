@@ -8,7 +8,7 @@ class ChatController extends Controller
 {
     public function chat(Request $request)
     {
-        $apiKey = "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";
+        $apiKey = env('GROQ_API_KEYS', '');
 
         $model = $request->string('model')->toString() ?: 'llama-3.3-70b-versatile';
 
